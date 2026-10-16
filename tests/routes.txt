@@ -14,6 +14,17 @@ home i.ytimg.com                  DIRECT
 away i.ytimg.com                  PROXY
 home youtubei.googleapis.com      DIRECT
 away youtubei.googleapis.com      PROXY
+# дополнительные домены YouTube (нет в списке автора; itdoginfo/allow-domains, сверка 2026-10-16)
+home jnn-pa.googleapis.com             DIRECT
+away jnn-pa.googleapis.com             PROXY
+home yt3.googleusercontent.com         DIRECT
+away yt3.googleusercontent.com         PROXY
+home ytimg.l.google.com                DIRECT
+away ytimg.l.google.com                PROXY
+home yting.com                         DIRECT
+away yting.com                         PROXY
+home yt-video-upload.l.google.com      DIRECT
+away yt-video-upload.l.google.com      PROXY
 # реклама YouTube режется в обоих профилях (adblock стоит выше правила YouTube)
 *    ads.youtube.com              REJECT
 

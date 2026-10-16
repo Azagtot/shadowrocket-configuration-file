@@ -71,6 +71,12 @@ FINAL,PROXY
 
 Правило YouTube стоит после adblock (рекламные домены YouTube всё равно режутся) и
 до российских списков (чтобы CDN-узлы googlevideo не ушли по `GEOIP,RU`/IP-списку).
+К списку автора добавлены 5 доменов YouTube, которых в нём нет (`jnn-pa.googleapis.com`,
+`yt3.googleusercontent.com`, `ytimg.l.google.com`, `yting.com`, `yt-video-upload.l.google.com`; источник
+`itdoginfo/allow-domains`, список `YOUTUBE_EXTRA` в `tools/build_profiles.py`); политика та же, что у списка. Явные
+правила по домену в любом случае проверяются раньше IP-списков и `GEOIP,RU` (приоритет приложения).
+Из шаблона убраны мёртвые строки автора: `dns-fallback-system` (приложение 2.2.92 такой ключ не знает) и
+`Israel-Group`/`AUTO` (строки групп в `[General]` приложение не читает).
 
 **`EU-GROUP`** определена в шаблоне, в секции `[Proxy Group]` (с 2026-10-16): `url-test` с **явным списком**
 серверов подписки `SMART-Германия`, `SMART-Нидерланды`, `SMART-Швеция`, `SMART-Франция` (без `[S+]`,

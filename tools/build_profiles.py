@@ -18,6 +18,15 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "tools" / "profile.base.conf"
 RAW = "https://raw.githubusercontent.com"
 YOUTUBE_LIST = f"{RAW}/misha-tgshv/shadowrocket-configuration-file/main/rules/domains_youtube.list"
+# Домены YouTube, которых нет в списке автора (он покрывает остальное ключевыми словами youtube/googlevideo).
+# Источник: itdoginfo/allow-domains, Services/youtube.lst (сверка 2026-10-16). Политика та же, что у списка.
+YOUTUBE_EXTRA = [
+    "jnn-pa.googleapis.com",
+    "yt3.googleusercontent.com",
+    "ytimg.l.google.com",
+    "yting.com",
+    "yt-video-upload.l.google.com",
+]
 UPDATE_URL = f"{RAW}/Azagtot/shadowrocket-configuration-file/main/conf/{{file}}"
 
 PROFILES = {
@@ -38,7 +47,11 @@ PROFILES = {
 
 
 def render(file: str, cfg: dict[str, str], template: str) -> str:
-    youtube = f"{cfg['comment']}\nRULE-SET,{YOUTUBE_LIST},{cfg['policy']}\n"
+    extra = "".join(f"DOMAIN-SUFFIX,{d},{cfg['policy']}\n" for d in YOUTUBE_EXTRA)
+    youtube = (
+        f"{cfg['comment']}\nRULE-SET,{YOUTUBE_LIST},{cfg['policy']}\n"
+        f"# Дополнительные домены YouTube, которых нет в списке автора (itdoginfo/allow-domains)\n{extra}"
+    )
     return (
         template.replace("{{NAME}}", cfg["name"])
         .replace("{{DESC}}", cfg["desc"])
