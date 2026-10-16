@@ -27,7 +27,7 @@ away youtubei.googleapis.com      PROXY
 *    x5club.ru                    DIRECT
 *    x5static.ru                  DIRECT
 *    service=84.52.113.154        DIRECT
-# EU-GROUP не определена в приложении, подставляется выбранный сервер (см. NOTES); тест фиксирует имя политики в файле
+# Bright Data идёт в группу EU-GROUP (определена в шаблоне, [Proxy Group]); тест фиксирует имя политики
 *    brightdata.com               EU-GROUP
 
 # --- реклама и банки
