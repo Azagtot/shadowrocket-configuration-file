@@ -1,0 +1,44 @@
+# Тесты маршрутизации: <профиль|*> <хост[=ip]> <ожидаемая политика>
+# Профиль берётся из имени файла: sr_home.conf -> home, sr_away.conf -> away.
+# Запуск: tools/check.sh   (или route_sim.py --tests tests/routes.txt conf/sr_home.conf conf/sr_away.conf)
+# Правила с IP/GEOIP симулятор проверяет только если задан IP (host=ip); GEOIP не моделируется,
+# поэтому тесты с IP используем только для нероссийских адресов или адресов из IP-списков.
+# Часть ожиданий сверена с реальным приложением через Config -> Test Rule (2026-10-16, v2.2.92).
+
+# --- единственное отличие профилей: YouTube
+home www.youtube.com              DIRECT
+away www.youtube.com              PROXY
+home rr3---sn-abc.googlevideo.com DIRECT
+away rr3---sn-abc.googlevideo.com PROXY
+home i.ytimg.com                  DIRECT
+away i.ytimg.com                  PROXY
+home youtubei.googleapis.com      DIRECT
+away youtubei.googleapis.com      PROXY
+# реклама YouTube режется в обоих профилях (adblock стоит выше правила YouTube)
+*    ads.youtube.com              REJECT
+
+# --- личные правила (реестр скилла: personal-rules-registry.md)
+*    reg.ru                       DIRECT
+*    api.reg.ru                   DIRECT
+*    brandpresent.ru              DIRECT
+*    5ka.ru                       DIRECT
+*    x5.ru                        DIRECT
+*    x5id.ru                      DIRECT
+*    x5club.ru                    DIRECT
+*    x5static.ru                  DIRECT
+*    service=84.52.113.154        DIRECT
+# EU-GROUP не определена в приложении, подставляется выбранный сервер (см. NOTES); тест фиксирует имя политики в файле
+*    brightdata.com               EU-GROUP
+
+# --- реклама и банки
+*    googleads.g.doubleclick.net  REJECT
+*    sberbank.ru                  DIRECT
+*    zzqx.sberbank.ru             DIRECT
+*    tinkoff.ru                   DIRECT
+
+# --- всё остальное идёт через прокси (нероссийский IP, чтобы не зависеть от IP-списков)
+*    claude.ai=160.79.104.10      PROXY
+*    github.com=140.82.121.4      PROXY
+
+# --- российский IP из IP-списка идёт напрямую (vk.com)
+*    vk.com=87.240.132.72         DIRECT

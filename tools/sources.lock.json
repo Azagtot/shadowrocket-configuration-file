@@ -1,0 +1,27 @@
+{
+  "https://raw.githubusercontent.com/Azagtot/shadowrocket-configuration-file/main/rules/adblock.list": {
+    "sha256": "d2a32f81e179d0804f0d6842df36eea3e42a8640bf8c64a5b60ae818750abc65",
+    "entries": 56972,
+    "checked": "2026-10-16"
+  },
+  "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/main/rules/domains_youtube.list": {
+    "sha256": "6dd5e90ac7d86a2f34c55f76a0de6adac6585fe22f7121cb21f95fe6d7cabc00",
+    "entries": 179,
+    "checked": "2026-10-16"
+  },
+  "https://github.com/hydraponique/roscomvpn-geoip/raw/refs/heads/master/release/text/whitelist.txt": {
+    "sha256": "5cf0b8862ad4f3318831dcf2e94076e221320ff47d77f1a12ebe661f613f70f6",
+    "entries": 6710,
+    "checked": "2026-10-16"
+  },
+  "https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/refs/heads/main/whitelist.txt": {
+    "sha256": "dfa4ffeec6c97a6feb7c594934d0c8b4e170fadff1d781f0de012ee383832eb9",
+    "entries": 910,
+    "checked": "2026-10-16"
+  },
+  "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/main/rules/domains_banking.list": {
+    "sha256": "4f58336cc191826ae72cb0d6cb8308f747aaf3c28394c59ae231bd16aab11b18",
+    "entries": 1048,
+    "checked": "2026-10-16"
+  }
+}
