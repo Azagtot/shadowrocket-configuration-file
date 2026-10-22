@@ -61,6 +61,8 @@ DOMAIN-SUFFIX,x5club.ru,DIRECT
 DOMAIN-SUFFIX,x5static.ru,DIRECT
 
 RULE-SET,.../rules/adblock.list,REJECT      # наш снапшот OISD Small
+DOMAIN-SUFFIX,yandex.net,DIRECT              # сервисы Яндекса напрямую; стоят ПОСЛЕ adblock,
+DOMAIN-SUFFIX,yandex.ru,DIRECT              #   чтобы реклама Яндекса (mc.yandex.ru, an.yandex.ru) резалась
 RULE-SET,.../rules/domains_youtube.list,DIRECT|PROXY   # единственное отличие home/away
 RULE-SET,hydraponique/roscomvpn-geoip,DIRECT     # внешняя живая подписка
 RULE-SET,hxehex/russia-mobile-internet-whitelist,DIRECT  # внешняя живая подписка

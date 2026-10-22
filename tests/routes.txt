@@ -41,6 +41,15 @@ away yt-video-upload.l.google.com      PROXY
 # Bright Data идёт в группу EU-GROUP (определена в шаблоне, [Proxy Group]); тест фиксирует имя политики
 *    brightdata.com               EU-GROUP
 
+# --- Яндекс: сервисы напрямую, реклама и трекеры Яндекса режутся (adblock стоит выше правил Яндекса)
+*    yandex.ru                    DIRECT
+*    www.yandex.ru                DIRECT
+*    music.yandex.ru              DIRECT
+*    yandex.net                   DIRECT
+*    avatars.mds.yandex.net       DIRECT
+*    mc.yandex.ru                 REJECT
+*    an.yandex.ru                 REJECT
+
 # --- реклама и банки
 *    googleads.g.doubleclick.net  REJECT
 *    sberbank.ru                  DIRECT
