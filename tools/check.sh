@@ -3,7 +3,15 @@
 # Скрипты и реестр лежат в скилле shadowrocket-configs; путь можно задать SR_SKILL.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-SKILL="${SR_SKILL:-$HOME/.claude/skills/shadowrocket-configs}"
+if [ -z "${SR_SKILL:-}" ]; then
+  if [ -d "$HOME/.agents/skills/shadowrocket-configs" ]; then
+    SKILL="$HOME/.agents/skills/shadowrocket-configs"
+  else
+    SKILL="$HOME/.claude/skills/shadowrocket-configs"
+  fi
+else
+  SKILL="$SR_SKILL"
+fi
 RAW="https://raw.githubusercontent.com/Azagtot/shadowrocket-configuration-file/main/conf/"
 fail=0
 

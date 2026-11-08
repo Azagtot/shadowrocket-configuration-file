@@ -67,3 +67,13 @@ away yt-video-upload.l.google.com      PROXY
 *    arkoselabs.com               PROXY
 *    client-api.arkoselabs.com    PROXY
 *    cdn.arkoselabs.com=13.226.244.21  PROXY
+
+# --- Antigravity & Gemini: эндпоинты через PROXY, не DIRECT даже при российском IP
+*    antigravity.google           PROXY
+*    antigravity-unleash.goog     PROXY
+*    googleapis.com               PROXY
+*    daily-cloudcode-pa.googleapis.com PROXY
+*    generativelanguage.googleapis.com PROXY
+*    google.com                   PROXY
+*    gstatic.com                  PROXY
+*    googleusercontent.com        PROXY
