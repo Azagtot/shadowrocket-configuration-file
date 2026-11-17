@@ -48,7 +48,6 @@ away yt-video-upload.l.google.com      PROXY
 *    tinkoff.ru                   DIRECT
 
 # --- всё остальное идёт через прокси (нероссийский IP, чтобы не зависеть от IP-списков)
-*    claude.ai=160.79.104.10      PROXY
 *    github.com=140.82.121.4      PROXY
 
 # --- российский IP из IP-списка идёт напрямую (vk.com)
@@ -59,12 +58,20 @@ away yt-video-upload.l.google.com      PROXY
 *    client-api.arkoselabs.com    PROXY
 *    cdn.arkoselabs.com=13.226.244.21  PROXY
 
-# --- Antigravity & Gemini: эндпоинты через PROXY, не DIRECT даже при российском IP
-*    antigravity.google           PROXY
-*    antigravity-unleash.goog     PROXY
-*    googleapis.com               PROXY
-*    daily-cloudcode-pa.googleapis.com PROXY
-*    generativelanguage.googleapis.com PROXY
-*    google.com                   PROXY
-*    gstatic.com                  PROXY
-*    googleusercontent.com        PROXY
+# --- Antigravity, Gemini & AI: эндпоинты через AI-GROUP, не DIRECT даже при российском IP
+*    antigravity.google           AI-GROUP
+*    antigravity-unleash.goog     AI-GROUP
+*    googleapis.com               AI-GROUP
+*    daily-cloudcode-pa.googleapis.com AI-GROUP
+*    generativelanguage.googleapis.com AI-GROUP
+*    google.com                   AI-GROUP
+*    gstatic.com                  AI-GROUP
+*    googleusercontent.com        AI-GROUP
+*    claude.ai                    AI-GROUP
+*    claude.ai=160.79.104.10      AI-GROUP
+*    anthropic.com                AI-GROUP
+*    openai.com                   AI-GROUP
+*    chatgpt.com                  AI-GROUP
+*    oaistatic.com                AI-GROUP
+*    oaiusercontent.com           AI-GROUP
+*    aistudio.google.com          AI-GROUP
