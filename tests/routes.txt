@@ -1,31 +1,22 @@
 # Тесты маршрутизации: <профиль|*> <хост[=ip]> <ожидаемая политика>
-# Профиль берётся из имени файла: sr_home.conf -> home, sr_away.conf -> away.
-# Запуск: tools/check.sh   (или route_sim.py --tests tests/routes.txt conf/sr_home.conf conf/sr_away.conf)
+# Профиль берётся из имени файла: sr_away.conf -> away.
+# Запуск: tools/check.sh   (или route_sim.py --tests tests/routes.txt conf/sr_away.conf)
 # Правила с IP/GEOIP симулятор проверяет только если задан IP (host=ip); GEOIP не моделируется,
 # поэтому тесты с IP используем только для нероссийских адресов или адресов из IP-списков.
 # Часть ожиданий сверена с реальным приложением через Config -> Test Rule (2026-10-16, v2.2.92).
 
-# --- единственное отличие профилей: YouTube
-home www.youtube.com              DIRECT
+# --- YouTube: через VPN в sr_away
 away www.youtube.com              PROXY
-home rr3---sn-abc.googlevideo.com DIRECT
 away rr3---sn-abc.googlevideo.com PROXY
-home i.ytimg.com                  DIRECT
 away i.ytimg.com                  PROXY
-home youtubei.googleapis.com      DIRECT
 away youtubei.googleapis.com      PROXY
 # дополнительные домены YouTube (нет в списке автора; itdoginfo/allow-domains, сверка 2026-10-16)
-home jnn-pa.googleapis.com             DIRECT
 away jnn-pa.googleapis.com             PROXY
-home yt3.googleusercontent.com         DIRECT
 away yt3.googleusercontent.com         PROXY
-home ytimg.l.google.com                DIRECT
 away ytimg.l.google.com                PROXY
-home yting.com                         DIRECT
 away yting.com                         PROXY
-home yt-video-upload.l.google.com      DIRECT
 away yt-video-upload.l.google.com      PROXY
-# реклама YouTube режется в обоих профилях (adblock стоит выше правила YouTube)
+# реклама YouTube режется (adblock стоит выше правила YouTube)
 *    ads.youtube.com              REJECT
 
 # --- личные правила (реестр скилла: personal-rules-registry.md)

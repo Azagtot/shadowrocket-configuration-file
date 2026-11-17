@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Собирает два профиля Shadowrocket из одного шаблона tools/profile.base.conf.
+"""Собирает профиль Shadowrocket из шаблона tools/profile.base.conf.
 
-Профили отличаются только маршрутом YouTube (и именем/update-url/заголовком):
-  conf/sr_home.conf — дома: YouTube напрямую (DIRECT)
-  conf/sr_away.conf — вне дома: YouTube через VPN (PROXY)
+Единственный активный профиль:
+  conf/sr_away.conf — YouTube и зарубежный трафик через VPN (PROXY), сервисы РФ напрямую.
 
 Запуск из корня репозитория:
-  python3 tools/build_profiles.py          # пересобрать файлы
-  python3 tools/build_profiles.py --check  # код 1, если файлы в conf/ не совпадают с шаблоном
+  python3 tools/build_profiles.py          # пересобрать файл
+  python3 tools/build_profiles.py --check  # код 1, если файл в conf/ не совпадает с шаблоном
 """
 from __future__ import annotations
 
@@ -30,17 +29,11 @@ YOUTUBE_EXTRA = [
 UPDATE_URL = f"{RAW}/Azagtot/shadowrocket-configuration-file/main/conf/{{file}}"
 
 PROFILES = {
-    "sr_home.conf": {
-        "name": "sr_home",
-        "desc": "дома: YouTube напрямую, остальное как в sr_away",
-        "policy": "DIRECT",
-        "comment": "# YouTube: дома напрямую (не через VPN)",
-    },
     "sr_away.conf": {
         "name": "sr_away",
-        "desc": "вне дома: YouTube через VPN, остальное как в sr_home",
+        "desc": "YouTube и зарубежный трафик через VPN, сервисы РФ напрямую",
         "policy": "PROXY",
-        "comment": "# YouTube: вне дома через VPN. Правило стоит до GEOIP,RU и RU-whitelist, чтобы\n"
+        "comment": "# YouTube: через VPN. Правило стоит до GEOIP,RU и RU-whitelist, чтобы\n"
                    "# российские CDN-узлы googlevideo не ушли напрямую",
     },
 }
