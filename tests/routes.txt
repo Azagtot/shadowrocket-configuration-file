@@ -41,6 +41,10 @@ away yt-video-upload.l.google.com      PROXY
 *    mc.yandex.ru                 REJECT
 *    an.yandex.ru                 REJECT
 
+# --- домашний NAS и сервисы зоны *.nas напрямую мимо прокси
+*    home.nas                     DIRECT
+*    pihole.nas                   DIRECT
+
 # --- реклама и банки
 *    googleads.g.doubleclick.net  REJECT
 *    sberbank.ru                  DIRECT
