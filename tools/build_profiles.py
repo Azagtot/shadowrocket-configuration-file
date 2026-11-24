@@ -159,6 +159,9 @@ def render_singbox() -> dict:
         ],
         "outbounds": all_outbounds,
         "route": {
+            "geoip": {
+                "path": "/var/lib/sing-box/geoip.db"
+            },
             "rules": [
                 {
                     "protocol": "quic",

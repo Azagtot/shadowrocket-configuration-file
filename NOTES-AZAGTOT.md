@@ -134,3 +134,56 @@ FINAL,PROXY
   мы просто ссылаемся на его raw-URL.
 - GeoLite2 Country/ASN базы — настроено автообновление в самом приложении
   (Settings → GeoLite2 Database → Auto Background Update), раз в 7 дней.
+
+---
+
+## Архитектура прозрачного VPN-шлюза (NAS Apofis) и PBR на MikroTik (Ноябрь 2026)
+
+### 1. Архитектура маршрутизации на MikroTik (192.168.10.1)
+
+Трафик устройств из адресного списка `vpn-devices` (MacBook `.50`/`.55`, PC `.65`, iPhone `.60`, Apple TV `.30`, LG TV `.220`) обрабатывается в `/ip firewall mangle`:
+
+```routeros
+# 0. Внешние адреса VLESS-узлов провайдера — напрямую в WAN (защита от циклического туннелирования)
+chain=prerouting action=accept dst-address-list=vpn-servers
+
+# 1. Корпоративные рабочие шлюзы (RDP/SSH) — аппаратный прямой выход через WAN
+chain=prerouting action=accept dst-address-list=direct-wan-targets
+
+# 2. Стандартный RDP (порт 3389) на любые внешние хосты — аппаратный прямой выход через WAN
+chain=prerouting action=accept protocol=tcp dst-port=3389
+
+# 3. Маркировка всего остального интернета для прозрачного туннеля через Apofis
+chain=prerouting action=mark-routing new-routing-mark=to-vpn passthrough=no src-address-list=vpn-devices dst-address-list=!local_subnets
+```
+
+Таблица маршрутизации `/ip route rule`:
+- `routing-mark=to-vpn action=lookup table=to-vpn`
+- Если Apofis выключен или недоступен (`check-gateway=ping`), маршрут автоматически переключается на прямой WAN (`main`), интернет в доме не падает.
+
+### 2. Как подключаться к новым RDP-серверам
+
+1. **Если новый RDP работает на стандартном порту 3389:**
+   - **Ничего настраивать не нужно вообще.** Правило №2 (`dst-port=3389`) автоматически направит соединение напрямую через провайдера на полной скорости с минимальным пингом.
+2. **Если новый RDP использует нестандартный порт (например, 1600, 3390, 4489):**
+   - Добавьте IP-адрес нового сервера в список `direct-wan-targets` на MikroTik:
+     - **Через терминал (с Mac или любого хоста):**
+       ```bash
+       ssh home-mikrotik "/ip firewall address-list add list=direct-wan-targets address=<IP_АДРЕС> comment=\"<Название>\""
+       ```
+     - **Через WinBox / WebFig:**
+       `IP` $\rightarrow$ `Firewall` $\rightarrow$ `Address Lists` $\rightarrow$ `+` $\rightarrow$ Выбрать `direct-wan-targets`, ввести IP.
+     - Добавление применяется мгновенно без перезагрузок.
+3. **Локальный RDP на домашний ПК Workstation (`192.168.10.65:3389`):**
+   - Работает напрямую внутри домашней сети (`192.168.10.0/24`), правило PBR его не касается (`dst-address-list=!local_subnets`).
+
+### 3. Реестр рабочих шлюзов (`direct-wan-targets`)
+- `84.52.113.154` — Техмаркет / Вся Арматура (TM Gateway: RDP 1600, SSH 22, туннели к SRV1..SRV6)
+- `91.190.85.67` — SFG Baltika / Ягами (SFG Gateway: SSH 22, SSH 22022)
+- `185.97.200.60` — SFG Резервный шлюз
+
+### 4. Конфигурация sing-box на NAS Apofis (192.168.10.5)
+- **База GeoIP**: Обязательно `"geoip": {"path": "/var/lib/sing-box/geoip.db"}` внутри `"route"`. Без явного указания пути база не загружается в ОЗУ, и правило `geoip: ru` не срабатывает.
+- **Группа `AI-AUTO`**: URLTest раз в 3 мин на `https://www.google.com/generate_204` с `tolerance: 50`. Узлы: Канада [S+], Канада, Сингапур [S+], Япония. (США и Европа исключены).
+- **Группа `auto-eu`**: Швеция [S+], Швеция, Нидерланды [S+], Нидерланды, Bridge-Нидерланды. Узлы Франции и Германии удалены из-за нестабильности и 504 таймаутов под нагрузкой.
+- **P2P Torrent**: `{"protocol": "bittorrent", "outbound": "direct"}` защищает подписку Velvet VPN от бана за торренты.
