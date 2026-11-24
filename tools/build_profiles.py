@@ -135,7 +135,7 @@ def render_singbox() -> dict:
         },
         "experimental": {
             "clash_api": {
-                "external_controller": "127.0.0.1:9095",
+                "external_controller": "0.0.0.0:9095",
                 "external_ui": "ui",
                 "secret": "",
                 "default_mode": "rule",
