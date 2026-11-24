@@ -80,20 +80,33 @@ def render_singbox() -> dict:
                 "BRIDGE-Германия",
                 "SMART-Германия",
             ],
-            "url": "http://www.gstatic.com/generate_204",
+            "url": "https://www.google.com/generate_204",
             "interval": "10m",
         },
         {
             "type": "urltest",
-            "tag": "AI-GROUP",
+            "tag": "AI-AUTO",
             "outbounds": [
                 "SМART-Канада",
                 "SМART-Канада [S+]",
-                "SМART-США",
-                "США",
+                "SМART-Сингапур [S+]",
+                "SМART-Япония",
             ],
-            "url": "http://www.gstatic.com/generate_204",
-            "interval": "10m",
+            "url": "https://www.google.com/generate_204",
+            "interval": "3m",
+            "tolerance": 50,
+        },
+        {
+            "type": "selector",
+            "tag": "AI-GROUP",
+            "outbounds": [
+                "AI-AUTO",
+                "SМART-Канада",
+                "SМART-Канада [S+]",
+                "SМART-Сингапур [S+]",
+                "SМART-Япония",
+                "auto-eu",
+            ],
         },
         {
             "type": "selector",
@@ -149,6 +162,10 @@ def render_singbox() -> dict:
                     "port": 443,
                     "outbound": "reject",
                 },
+                {
+                    "protocol": "bittorrent",
+                    "outbound": "direct",
+                },
                 # Личные правила Azagtot (1-в-1 с personal-rules-registry.md)
                 {
                     "domain_suffix": ["brightdata.com", "luminati.io", "brd.superproxy.io"],
@@ -177,6 +194,36 @@ def render_singbox() -> dict:
                     ],
                     "outbound": "direct",
                 },
+                # AI Group (Strictly above YouTube & General Google)
+                {
+                    "domain_suffix": [
+                        "antigravity.google",
+                        "antigravity-unleash.goog",
+                        "deepmind.google",
+                        "google.dev",
+                        "cloud.google",
+                        "aistudio.google.com",
+                        "alkalimakersuite-pa.googleapis.com",
+                        "daily-cloudcode-pa.googleapis.com",
+                        "cloudcode-pa.googleapis.com",
+                        "autopush-cloudcode-pa.googleapis.com",
+                        "staging-cloudcode-pa.googleapis.com",
+                        "generativelanguage.googleapis.com",
+                        "claude.ai",
+                        "anthropic.com",
+                        "openai.com",
+                        "chatgpt.com",
+                        "oaistatic.com",
+                        "oaiusercontent.com",
+                    ],
+                    "domain_keyword": [
+                        "antigravity",
+                        "generativelanguage",
+                        "cloudcode",
+                        "cloudaicompanion",
+                    ],
+                    "outbound": "AI-GROUP",
+                },
                 # YouTube (Strictly above GeoIP RU)
                 {
                     "domain_suffix": [
@@ -188,35 +235,15 @@ def render_singbox() -> dict:
                     "domain_keyword": ["youtube", "googlevideo"],
                     "outbound": "PROXY",
                 },
-                # AI Group (Strictly above GeoIP RU)
+                # General Google (EU PROXY ~161ms, isolated from Canada)
                 {
                     "domain_suffix": [
-                        "antigravity.google",
-                        "antigravity-unleash.goog",
-                        "deepmind.google",
-                        "google.dev",
-                        "cloud.google",
-                        "googleapis.com",
                         "google.com",
+                        "googleapis.com",
                         "gstatic.com",
                         "googleusercontent.com",
-                        "claude.ai",
-                        "anthropic.com",
-                        "openai.com",
-                        "chatgpt.com",
-                        "oaistatic.com",
-                        "oaiusercontent.com",
-                        "aistudio.google.com",
                     ],
-                    "outbound": "AI-GROUP",
-                },
-                {
-                    "domain_keyword": [
-                        "antigravity",
-                        "generativelanguage",
-                        "cloudcode",
-                    ],
-                    "outbound": "AI-GROUP",
+                    "outbound": "PROXY",
                 },
                 # Fallback GeoIP RU
                 {
