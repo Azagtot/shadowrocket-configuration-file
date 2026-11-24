@@ -44,6 +44,8 @@ away yt-video-upload.l.google.com      PROXY
 # --- домашний NAS и сервисы зоны *.nas напрямую мимо прокси
 *    home.nas                     DIRECT
 *    pihole.nas                   DIRECT
+*    vpn.nas                      DIRECT
+*    media.nas                    DIRECT
 
 # --- реклама и банки
 *    googleads.g.doubleclick.net  REJECT
@@ -67,6 +69,8 @@ away yt-video-upload.l.google.com      PROXY
 *    antigravity-unleash.goog     AI-GROUP
 *    googleapis.com               AI-GROUP
 *    daily-cloudcode-pa.googleapis.com AI-GROUP
+*    oauth2.googleapis.com        AI-GROUP
+*    accounts.google.com          AI-GROUP
 *    generativelanguage.googleapis.com AI-GROUP
 *    google.com                   AI-GROUP
 *    gstatic.com                  AI-GROUP

@@ -61,7 +61,7 @@ def render_singbox() -> dict:
     if NODES_CACHE.exists():
         try:
             cached_nodes = json.loads(NODES_CACHE.read_text(encoding="utf-8"))
-        except Exception as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Предупреждение: ошибка чтения {NODES_CACHE}: {e}", file=sys.stderr)
 
     # Базовые группы маршрутизации sing-box
@@ -218,6 +218,8 @@ def render_singbox() -> dict:
                         "autopush-cloudcode-pa.googleapis.com",
                         "staging-cloudcode-pa.googleapis.com",
                         "generativelanguage.googleapis.com",
+                        "oauth2.googleapis.com",
+                        "accounts.google.com",
                         "claude.ai",
                         "anthropic.com",
                         "openai.com",
