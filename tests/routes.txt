@@ -67,6 +67,9 @@ away yt-video-upload.l.google.com      PROXY
 # --- Antigravity, Gemini & AI: эндпоинты через AI-GROUP, не DIRECT даже при российском IP
 *    antigravity.google           AI-GROUP
 *    antigravity-unleash.goog     AI-GROUP
+*    dns.google                   AI-GROUP
+*    ai.google                    AI-GROUP
+*    labs.google                  AI-GROUP
 *    googleapis.com               AI-GROUP
 *    daily-cloudcode-pa.googleapis.com AI-GROUP
 *    oauth2.googleapis.com        AI-GROUP
