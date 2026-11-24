@@ -150,8 +150,9 @@ chain=prerouting action=accept dst-address-list=vpn-servers
 # 1. Корпоративные рабочие шлюзы (RDP/SSH) — аппаратный прямой выход через WAN
 chain=prerouting action=accept dst-address-list=direct-wan-targets
 
-# 2. Стандартный RDP (порт 3389) на любые внешние хосты — аппаратный прямой выход через WAN
-chain=prerouting action=accept protocol=tcp dst-port=3389
+# 2. RDP (диапазон 1400-1600 и порт 3389 TCP/UDP) на любые внешние хосты — аппаратный прямой выход через WAN
+chain=prerouting action=accept protocol=tcp dst-port=1400-1600,3389
+chain=prerouting action=accept protocol=udp dst-port=1400-1600,3389
 
 # 3. Маркировка всего остального интернета для прозрачного туннеля через Apofis
 chain=prerouting action=mark-routing new-routing-mark=to-vpn passthrough=no src-address-list=vpn-devices dst-address-list=!local_subnets
@@ -163,9 +164,9 @@ chain=prerouting action=mark-routing new-routing-mark=to-vpn passthrough=no src-
 
 ### 2. Как подключаться к новым RDP-серверам
 
-1. **Если новый RDP работает на стандартном порту 3389:**
-   - **Ничего настраивать не нужно вообще.** Правило №2 (`dst-port=3389`) автоматически направит соединение напрямую через провайдера на полной скорости с минимальным пингом.
-2. **Если новый RDP использует нестандартный порт (например, 1600, 3390, 4489):**
+1. **Если новый RDP работает в диапазоне портов 1400–1600 или на порту 3389:**
+   - **Ничего настраивать не нужно вообще.** Правила №2 и №3 (`dst-port=1400-1600,3389` TCP и UDP) автоматически направят соединение напрямую через провайдера на полной гигабитной скорости с минимальным пингом 1-3 мс.
+2. **Если новый RDP использует какой-то экзотический нестандартный порт вне диапазона (например, 4489, 5000):**
    - Добавьте IP-адрес нового сервера в список `direct-wan-targets` на MikroTik:
      - **Через терминал (с Mac или любого хоста):**
        ```bash
