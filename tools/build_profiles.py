@@ -70,18 +70,15 @@ def render_singbox() -> dict:
             "type": "urltest",
             "tag": "auto-eu",
             "outbounds": [
-                "SMART-Швеция",
                 "SMART-Швеция [S+]",
-                "SMART-Нидерланды",
+                "SMART-Швеция",
                 "SMART-Нидерланды [S+]",
+                "SMART-Нидерланды",
                 "BRIDGE-Нидерланды",
-                "Франция",
-                "SМART-Франция",
-                "BRIDGE-Германия",
-                "SMART-Германия",
             ],
             "url": "https://www.google.com/generate_204",
-            "interval": "10m",
+            "interval": "3m",
+            "tolerance": 50,
         },
         {
             "type": "urltest",
@@ -111,7 +108,13 @@ def render_singbox() -> dict:
         {
             "type": "selector",
             "tag": "PROXY",
-            "outbounds": ["auto-eu", "AI-GROUP", "direct"],
+            "outbounds": [
+                "auto-eu",
+                "SMART-Швеция [S+]",
+                "SMART-Нидерланды [S+]",
+                "AI-GROUP",
+                "direct",
+            ],
         },
         {
             "type": "direct",
