@@ -1,0 +1,17 @@
+# AI Agent Settings & Local Excludes
+.claude/
+.gemini/
+.cursor/
+.agents/
+*.local.json
+settings.local.json
+
+# Private VPN credentials, subscription cache, and compiled node secrets
+tools/nodes.cache.json
+conf/sing-box-nas.json
+*.secret
+*.key
+*.pem
+__pycache__/
+*.py[cod]
+.DS_Store
