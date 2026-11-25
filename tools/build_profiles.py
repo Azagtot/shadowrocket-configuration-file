@@ -116,6 +116,7 @@ def render_singbox() -> dict:
         {
             "type": "direct",
             "tag": "direct",
+            "domain_strategy": "ipv4_only",
         },
         {
             "type": "block",
