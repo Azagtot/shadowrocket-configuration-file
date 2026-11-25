@@ -70,25 +70,12 @@ def render_singbox() -> dict:
             "type": "urltest",
             "tag": "auto-eu",
             "outbounds": [
-                "SMART-Швеция [S+]",
-                "SMART-Швеция",
-                "SMART-Нидерланды [S+]",
-                "SMART-Нидерланды",
+                "BRIDGE-Швеция",
+                "BRIDGE-Германия",
+                "Франция",
                 "BRIDGE-Нидерланды",
             ],
-            "url": "https://www.google.com/generate_204",
-            "interval": "3m",
-            "tolerance": 50,
-        },
-        {
-            "type": "urltest",
-            "tag": "AI-AUTO",
-            "outbounds": [
-                "SМART-Канада",
-                "SМART-Канада [S+]",
-                "SМART-Япония",
-            ],
-            "url": "https://www.google.com/generate_204",
+            "url": "http://www.gstatic.com/generate_204",
             "interval": "3m",
             "tolerance": 50,
         },
@@ -96,19 +83,25 @@ def render_singbox() -> dict:
             "type": "selector",
             "tag": "AI-GROUP",
             "outbounds": [
-                "AI-AUTO",
-                "SМART-Канада",
                 "SМART-Канада [S+]",
+                "SМART-Канада",
+                "BRIDGE-Швеция",
+                "BRIDGE-Германия",
+                "Франция",
                 "SМART-Япония",
+                "auto-eu",
             ],
+            "default": "SМART-Канада [S+]",
         },
         {
             "type": "selector",
             "tag": "PROXY",
             "outbounds": [
                 "auto-eu",
-                "SMART-Швеция [S+]",
-                "SMART-Нидерланды [S+]",
+                "BRIDGE-Швеция",
+                "BRIDGE-Германия",
+                "Франция",
+                "BRIDGE-Нидерланды",
                 "AI-GROUP",
                 "direct",
             ],
@@ -138,6 +131,29 @@ def render_singbox() -> dict:
                 "secret": "",
                 "default_mode": "rule",
             }
+        },
+        "dns": {
+            "servers": [
+                {
+                    "tag": "remote-dns",
+                    "address": "https://1.1.1.1/dns-query",
+                    "detour": "AI-GROUP",
+                },
+                {
+                    "tag": "local-dns",
+                    "address": "192.168.10.1",
+                    "detour": "direct",
+                },
+            ],
+            "rules": [
+                {
+                    "outbound": "any",
+                    "server": "local-dns",
+                },
+            ],
+            "final": "remote-dns",
+            "strategy": "ipv4_only",
+            "reverse_mapping": True,
         },
         "inbounds": [
             {
@@ -210,12 +226,13 @@ def render_singbox() -> dict:
                     "domain_keyword": ["youtube", "googlevideo"],
                     "outbound": "PROXY",
                 },
-                # AI Group & All Google Services (Canada/Japan only, zero EU/NL)
+                # AI Group & All Google Services (sticky single node, zero mid-session jumps)
                 {
                     "domain_suffix": [
                         "accounts.google.com",
                         "ai.google",
                         "ai.google.dev",
+                        "aiplatform.googleapis.com",
                         "aistudio.google.com",
                         "alkalimakersuite-pa.googleapis.com",
                         "anthropic.com",
@@ -255,6 +272,9 @@ def render_singbox() -> dict:
                         "cloudcode",
                         "gemini",
                         "generativelanguage",
+                    ],
+                    "domain_regex": [
+                        "^.*-pa\\.googleapis\\.com$",
                     ],
                     "outbound": "AI-GROUP",
                 },
