@@ -72,7 +72,6 @@ def render_singbox() -> dict:
             "outbounds": [
                 "BRIDGE-Швеция",
                 "BRIDGE-Германия",
-                "Франция",
                 "BRIDGE-Нидерланды",
             ],
             "url": "http://www.gstatic.com/generate_204",
@@ -211,6 +210,8 @@ def render_singbox() -> dict:
                         "x5static.ru",
                         "yandex.net",
                         "yandex.ru",
+                        "ya.ru",
+                        "yastatic.net",
                         "nas",
                     ],
                     "outbound": "direct",

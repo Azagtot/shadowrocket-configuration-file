@@ -34,6 +34,8 @@ away yt-video-upload.l.google.com      PROXY
 
 # --- Яндекс: сервисы напрямую, реклама и трекеры Яндекса режутся (adblock стоит выше правил Яндекса)
 *    yandex.ru                    DIRECT
+*    ya.ru                        DIRECT
+*    yastatic.net                 DIRECT
 *    www.yandex.ru                DIRECT
 *    music.yandex.ru              DIRECT
 *    yandex.net                   DIRECT
