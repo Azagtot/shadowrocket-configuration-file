@@ -70,6 +70,7 @@ def render_singbox() -> dict:
             "type": "urltest",
             "tag": "auto-eu",
             "outbounds": [
+                "EU-JustHost-FRA2",
                 "BRIDGE-Швеция",
                 "BRIDGE-Германия",
                 "BRIDGE-Нидерланды",
@@ -82,6 +83,7 @@ def render_singbox() -> dict:
             "type": "selector",
             "tag": "AI-GROUP",
             "outbounds": [
+                "EU-JustHost-FRA2",
                 "SМART-Канада [S+]",
                 "SМART-Канада",
                 "BRIDGE-Швеция",
@@ -90,12 +92,13 @@ def render_singbox() -> dict:
                 "SМART-Япония",
                 "auto-eu",
             ],
-            "default": "SМART-Канада [S+]",
+            "default": "EU-JustHost-FRA2",
         },
         {
             "type": "selector",
             "tag": "PROXY",
             "outbounds": [
+                "EU-JustHost-FRA2",
                 "auto-eu",
                 "BRIDGE-Швеция",
                 "BRIDGE-Германия",
@@ -116,7 +119,18 @@ def render_singbox() -> dict:
         },
     ]
 
-    all_outbounds = standard_outbounds + cached_nodes
+    custom_nodes = [
+        {
+            "type": "shadowsocks",
+            "tag": "EU-JustHost-FRA2",
+            "server": "48.103.187.133",
+            "server_port": 8443,
+            "method": "2022-blake3-aes-128-gcm",
+            "password": "hgMMdMRT7aph0Vp0p8SH4A==",
+        }
+    ]
+
+    all_outbounds = standard_outbounds + custom_nodes + cached_nodes
 
     config = {
         "log": {
