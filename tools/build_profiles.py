@@ -70,9 +70,12 @@ def render_singbox() -> dict:
             "type": "urltest",
             "tag": "auto-eu",
             "outbounds": [
-                "EU-JustHost-FRA2",
-                "BRIDGE-Швеция",
+                "SMART-Швеция [S+]",
                 "BRIDGE-Германия",
+                "SMART-Нидерланды [S+]",
+                "SMART-Швеция",
+                "SMART-Германия",
+                "BRIDGE-Швеция",
                 "BRIDGE-Нидерланды",
             ],
             "url": "http://www.gstatic.com/generate_204",
@@ -80,26 +83,25 @@ def render_singbox() -> dict:
             "tolerance": 50,
         },
         {
-            "type": "selector",
+            "type": "urltest",
             "tag": "AI-GROUP",
             "outbounds": [
-                "EU-JustHost-FRA2",
                 "SМART-Канада [S+]",
                 "SМART-Канада",
                 "SМART-Япония",
             ],
-            "default": "EU-JustHost-FRA2",
+            "url": "http://www.gstatic.com/generate_204",
+            "interval": "3m",
+            "tolerance": 50,
         },
         {
             "type": "selector",
             "tag": "PROXY",
             "outbounds": [
-                "EU-JustHost-FRA2",
                 "auto-eu",
-                "BRIDGE-Швеция",
+                "SMART-Швеция [S+]",
                 "BRIDGE-Германия",
-                "Франция",
-                "BRIDGE-Нидерланды",
+                "SMART-Нидерланды [S+]",
                 "AI-GROUP",
                 "direct",
             ],
@@ -115,18 +117,7 @@ def render_singbox() -> dict:
         },
     ]
 
-    custom_nodes = [
-        {
-            "type": "shadowsocks",
-            "tag": "EU-JustHost-FRA2",
-            "server": "48.103.187.133",
-            "server_port": 8443,
-            "method": "2022-blake3-aes-128-gcm",
-            "password": "hgMMdMRT7aph0Vp0p8SH4A==",
-        }
-    ]
-
-    all_outbounds = standard_outbounds + custom_nodes + cached_nodes
+    all_outbounds = standard_outbounds + cached_nodes
 
     config = {
         "log": {
@@ -146,7 +137,8 @@ def render_singbox() -> dict:
                 {
                     "tag": "remote-dns",
                     "address": "https://1.1.1.1/dns-query",
-                    "detour": "AI-GROUP",
+                    "address_resolver": "local-dns",
+                    "detour": "auto-eu",
                 },
                 {
                     "tag": "local-dns",
@@ -156,7 +148,40 @@ def render_singbox() -> dict:
             ],
             "rules": [
                 {
-                    "outbound": "any",
+                    "outbound": ["direct"],
+                    "server": "local-dns",
+                },
+                {
+                    "domain_suffix": [
+                        "userapi.co.uk",
+                        "userapi.com",
+                        ".ru",
+                        ".su",
+                        ".xn--p1ai",
+                        "yandex.net",
+                        "yandex.ru",
+                        "ya.ru",
+                        "yastatic.net",
+                        "vk.com",
+                        "vk.ru",
+                        "ok.ru",
+                        "mail.ru",
+                        "gosuslugi.ru",
+                        "sberbank.ru",
+                        "tbank.ru",
+                        "t-bank.ru",
+                        "tinkoff.ru",
+                        "alfabank.ru",
+                        "vtb.ru",
+                        "reg.ru",
+                        "brandpresent.ru",
+                        "5ka.ru",
+                        "x5.ru",
+                        "x5id.ru",
+                        "x5club.ru",
+                        "x5static.ru",
+                        "nas",
+                    ],
                     "server": "local-dns",
                 },
             ],
